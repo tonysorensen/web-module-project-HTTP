@@ -5,7 +5,7 @@ import MovieList from './components/MovieList';
 import Movie from './components/Movie';
 
 import MovieHeader from './components/MovieHeader';
-import AddMovieForm from "./components/AddMovieForm";
+import AddMovieForm from './components/AddMovieForm'
 import EditMovieForm from './components/EditMovieForm';
 import FavoriteMovieList from './components/FavoriteMovieList';
 
@@ -35,6 +35,7 @@ const App = (props) => {
     console.log('movies', movies)
     const deletedMovie = movies.find(movie=>movie.id == Number(id))
     console.log('deletedMovie = ',deletedMovie)
+    
 })
 .catch(err=>{
     console.log(`App: deleteMovie: delete: err`, err)

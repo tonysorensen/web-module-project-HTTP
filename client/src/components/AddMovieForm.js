@@ -9,7 +9,7 @@ const AddMovieForm = (props) => {
 	const {id}=useParams();
 
 	const [movie, setMovie] = useState({
-        id: "",
+        id: Date.now(),
 		title:"",
 		director: "",
 		genre: "",
