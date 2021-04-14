@@ -7,7 +7,7 @@ import axios from 'axios';
 const EditMovieForm = (props) => {
 	const { push } = useHistory();
 	const {id}=useParams();
-	
+
 	const [movie, setMovie] = useState({
 		title:"",
 		director: "",
@@ -16,6 +16,18 @@ const EditMovieForm = (props) => {
 		description: ""
 	});
 	
+	useEffect(() => {
+		axios.get(`http://localhost:5000/api/movies/${id}`)
+		.then(res=>{
+			console.log("EditMovieForm: useEffect: get: res",res)
+			setMovie(res.data)
+		})
+		.catch(err=>{
+			console.log(err)
+		})
+		
+	}, [])
+// debugger
 	const handleChange = (e) => {
         setMovie({
             ...movie,
@@ -25,6 +37,24 @@ const EditMovieForm = (props) => {
 
     const handleSubmit = (e) => {
 		e.preventDefault();
+		axios.put(`http://localhost:5000/api/movies/${id}`, movie)
+		.then(res=>{
+			console.log(`EditMovieForm: handleSubmit: put: res`, res)	
+			const changedMovie = res.data.find(movie => movie.id == Number(id))
+			console.log(`changedMovie`, changedMovie)
+			props.setMovies(props.movies.map(movie=> {
+				if (movie.id === changedMovie.id){
+					console.log('movie changed')
+					return changedMovie
+				}
+				return movie;
+			}))
+			push(`/api/movies/${id}`)
+
+		})
+		.catch(err=>{
+			console.log(`Unable to find movie by id ${id}: `, err)
+		})
 	}
 	
 	const { title, director, genre, metascore, description } = movie;
@@ -60,7 +90,10 @@ const EditMovieForm = (props) => {
 									
 				</div>
 				<div className="modal-footer">			    
-					<input type="submit" className="btn btn-info" value="Save"/>
+				<Link to ={`/movies/${id}`}>
+				<input type="submit" className="btn btn-info" value="Save"/>
+				</Link>
+					
 					<Link to={`/movies/1`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
 				</div>
 			</form>

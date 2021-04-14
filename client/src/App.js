@@ -18,13 +18,14 @@ const App = (props) => {
   useEffect(()=>{
     axios.get('http://localhost:5000/api/movies')
       .then(res => {
+        console.log(`App: useEffect: get: res`, res)
         setMovies(res.data);
       })
       .catch(err => {
-        console.log(err);
+        console.log(`App: useEffect: get: err`,err);
       });
   }, []);
-
+// debugger
   const deleteMovie = (id)=> {
   }
 
@@ -45,7 +46,7 @@ const App = (props) => {
         
           <Switch>
             <Route path="/movies/edit/:id">
-            <EditMovieForm/>
+            <EditMovieForm movies={movies} setMovies={setMovies}/>
             </Route>
 
             <Route path="/movies/:id">
