@@ -4,11 +4,12 @@ import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
-const EditMovieForm = (props) => {
+const AddMovieForm = (props) => {
 	const { push } = useHistory();
 	const {id}=useParams();
 
 	const [movie, setMovie] = useState({
+        id: Date.now(),
 		title:"",
 		director: "",
 		genre: "",
@@ -16,17 +17,17 @@ const EditMovieForm = (props) => {
 		description: ""
 	});
 	
-	useEffect(() => {
-		axios.get(`http://localhost:5000/api/movies/${id}`)
-		.then(res=>{
-			console.log("EditMovieForm: useEffect: get: res",res)
-			setMovie(res.data)
-		})
-		.catch(err=>{
-			console.log(err)
-		})
+	// useEffect(() => {
+	// 	axios.get(`http://localhost:5000/api/movies/${id}`)
+	// 	.then(res=>{
+	// 		console.log("AddMovieForm: useEffect: get: res",res)
+	// 		setMovie(res.data)
+	// 	})
+	// 	.catch(err=>{
+	// 		console.log(err)
+	// 	})
 		
-	}, [])
+	// }, [])
 // debugger
 	const handleChange = (e) => {
         setMovie({
@@ -37,26 +38,29 @@ const EditMovieForm = (props) => {
 
     const handleSubmit = (e) => {
 		e.preventDefault();
-		axios.put(`http://localhost:5000/api/movies/${id}`, movie)
+		axios.post(`http://localhost:5000/api/movies`, movie)
+        
 		.then(res=>{
-			console.log(`EditMovieForm: handleSubmit: put: res`, res)	
-			const changedMovie = res.data.find(movie => movie.id == Number(id))
-			console.log(`changedMovie`, changedMovie)
-			props.setMovies(props.movies.map(movie=> {
-				if (movie.id === changedMovie.id){
-					console.log('movie changed')
-					return changedMovie
-				}
-				return movie;
-			}))
-			push(`/api/movies/${id}`)
+            // debugger
+            
+			console.log(`AddMovieForm: handleSubmit: post: res`, res)
+		    const addedMovie = res.data
+			console.log('movies', props.movies)
+			props.setMovies([
+                ...props.movies,
+                addedMovie
+            ]
+            )
+			push(`/api/movies`)
 
 		})
 		.catch(err=>{
-			console.log(`Unable to find movie by id ${id}: `, err)
+			console.log(`AddMovieForm: handleSubmit: post: err `, err)
 		})
+        // debugger
+        console.log('newmovies',props.movies)
 	}
-	
+	// debugger
 	const { title, director, genre, metascore, description } = movie;
 
     return (
@@ -64,7 +68,7 @@ const EditMovieForm = (props) => {
 		<div className="modal-content">
 			<form onSubmit={handleSubmit}>
 				<div className="modal-header">						
-					<h4 className="modal-title">Editing <strong>{movie.title}</strong></h4>
+					<h4 className="modal-title">Add a Movie <strong>{movie.title}</strong></h4>
 				</div>
 				<div className="modal-body">					
 					<div className="form-group">
@@ -90,9 +94,9 @@ const EditMovieForm = (props) => {
 									
 				</div>
 				<div className="modal-footer">			    
-				<Link to ={`/movies/${id}`}>
+			
 				<input type="submit" className="btn btn-info" value="Save"/>
-				</Link>
+			
 					
 					<Link to={`/movies/1`}><input type="button" className="btn btn-default" value="Cancel"/></Link>
 				</div>
@@ -101,4 +105,4 @@ const EditMovieForm = (props) => {
 	</div>);
 }
 
-export default EditMovieForm;
+export default AddMovieForm
