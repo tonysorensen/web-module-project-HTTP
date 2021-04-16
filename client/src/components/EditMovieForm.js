@@ -26,7 +26,7 @@ const EditMovieForm = (props) => {
 			console.log(err)
 		})
 		
-	}, [])
+	}, [id])
 // debugger
 	const handleChange = (e) => {
         setMovie({
@@ -40,7 +40,7 @@ const EditMovieForm = (props) => {
 		axios.put(`http://localhost:5000/api/movies/${id}`, movie)
 		.then(res=>{
 			console.log(`EditMovieForm: handleSubmit: put: res`, res)	
-			const changedMovie = res.data.find(movie => movie.id == Number(id))
+			const changedMovie = res.data.find(movie => movie.id === Number(id))
 			console.log(`changedMovie`, changedMovie)
 			props.setMovies(props.movies.map(movie=> {
 				if (movie.id === changedMovie.id){

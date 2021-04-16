@@ -13,7 +13,7 @@ import axios from 'axios';
 
 const App = (props) => {
   const [movies, setMovies] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  // const [favoriteMovies, setFavoriteMovies] = useState([]);
   
   useEffect(()=>{
     axios.get('http://localhost:5000/api/movies')
@@ -33,7 +33,7 @@ const App = (props) => {
   // const deletedMovie = res.data.find(movie => movie.id == Number(id))
     console.log(`Movie: deleteMovie: delete: res`, res)
     console.log('movies', movies)
-    const deletedMovie = movies.find(movie=>movie.id == Number(id))
+    const deletedMovie = movies.find(movie=>movie.id === Number(id))
     console.log('deletedMovie = ',deletedMovie)
     
 })
@@ -43,9 +43,9 @@ const App = (props) => {
   })
 }
   
-  const addToFavorites = (movie) => {
+  // const addToFavorites = (movie) => {
     
-  }
+  // }
 
   return (
     <div>
