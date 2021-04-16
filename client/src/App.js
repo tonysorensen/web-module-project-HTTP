@@ -56,7 +56,7 @@ const App = (props) => {
       <div className="container">
         <MovieHeader/>
         <div className="row ">
-          <FavoriteMovieList favoriteMovies={favoriteMovies}/>
+          {/* <FavoriteMovieList favoriteMovies={favoriteMovies}/> */}
         
           <Switch>
             <Route path="/movies/edit/:id">
