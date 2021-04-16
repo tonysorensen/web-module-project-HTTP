@@ -4,7 +4,7 @@ import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const Movie = (props) => {
-    const { addToFavorites } = props;
+    // const { addToFavorites } = props;
 
     const [movie, setMovie] = useState('');
 
