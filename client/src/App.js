@@ -7,7 +7,7 @@ import Movie from './components/Movie';
 import MovieHeader from './components/MovieHeader';
 import AddMovieForm from './components/AddMovieForm'
 import EditMovieForm from './components/EditMovieForm';
-import FavoriteMovieList from './components/FavoriteMovieList';
+// import FavoriteMovieList from './components/FavoriteMovieList';
 
 import axios from 'axios';
 
